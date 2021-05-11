@@ -1,0 +1,86 @@
+join html 입니다.
+<form action="/user/join_success" id="login_form" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>아이디</td> <!-- 중복체크 ajax -->
+            <td>
+                <input type="text" id='user_id' name="user_id">
+                <p id="user_id_msg"></p>
+            </td>
+
+        </tr>
+        <tr>
+            <td>패스워드</td> <!-- 패스워드 확인 -->
+            <td><input type="password" name="user_pw" id="user_pw"></td>
+        </tr>
+        <tr>
+            <td>패스워드 확인</td>
+            <td><input type="password" name="user_pw_check" id="user_pw_check"></td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td><input type="text" name="user_name"></td>
+        </tr>
+        <tr>
+            <td>성별</td>
+            <td>
+                <input type='radio' name="gender" value="0">남자
+                <input type='radio' name="gender" value="1" checked>여자
+            </td>
+        </tr>
+        <tr>
+            <td>이미지</td>
+            <td><input type="file" name="img" id="img" accept="image/png, image/jpeg"></td> <!-- 확장자 설정 -->
+        </tr>
+        
+    </table>
+
+    <input type='button' id="login_submit" value="로그인">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script type="text/javascript">
+
+        const pw1 = document.querySelector('#user_pw');
+        const pw2 = document.querySelector('#user_pw_check');
+        const userIdMsg = document.querySelector('#user_id_msg');
+        const userId = document.querySelector('#user_id');
+
+        async function userIdCheck(){
+            let data = await axios.get(`http://localhost:3000/user/userid_check?userid=${user_id.value}`);
+            // ajax를 가져와서 중복 여부 boolean으로 반환
+            let loginFlag = true;
+
+            if(!loginFlag){
+                userIdMsg.innerHTML='중복된 아이디입니다.'
+                
+            }else{
+                userIdMsg.innerHTML='올바른 아이디입니다.'
+                userIdMsg.style.color = 'green';
+            }
+        }
+
+        function passwordCheck(){
+            return pw1.value===pw2.value;
+        }
+
+        const btn = document.querySelector('#login_submit');
+        const loginForm = document.querySelector('#login_form');
+
+        userId.addEventListener('focusout', userIdCheck);
+
+        btn.addEventListener('click',()=>{
+            pwCheck = passwordCheck();
+
+            if(pwCheck){
+                loginForm.submit();    
+            }else{
+                pw1.value = '';
+                pw2.value = '';
+                pw1.focus();
+                alert('패스워드를 확인해주세요');
+            }
+            
+            return false;
+            
+        });
+    </script>
+</form>

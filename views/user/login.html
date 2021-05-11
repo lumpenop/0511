@@ -1,0 +1,41 @@
+login html 입니다.
+
+
+
+<form action="/user/login_check" method="post" id="loginFrm">
+    <table>
+        <tr>
+            <td>
+                아이디
+            </td>
+            <td>
+                <input type="text" name="user_id" id="user_id">
+            </td>
+        </tr>
+        <tr>
+            <td>패스워드</td>
+            <td>
+                <input type='password' name="user_pw" id="user_pw">
+            </td>
+        </tr>
+    </table>
+    <input type='submit' value="로그인하기">
+</form>
+
+{% if flag == '0' %}
+<script type="text/javascript">
+    const id = document.querySelector('#user_id');
+    const pw = document.querySelector('#user_pw');
+    id.setAttribute('style','background:yellow;')
+    pw.setAttribute('style','background:yellow;')
+
+    id.addEventListener('focus',()=>{          //요즘은 경고창보다 색 변화로 체크해줌
+        id.setAttribute('style', 'background:fff')
+    })
+    pw.addEventListener('focus',()=>{
+        id.setAttribute('style', 'background:fff')
+    })
+    alert('아이디와 패스워드가 일치하지 않습니다.');
+    document.getElementById("loginFrm").reset();
+</script>
+{% endif %}
