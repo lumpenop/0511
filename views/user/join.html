@@ -45,13 +45,13 @@ join html 입니다.
         const userId = document.querySelector('#user_id');
 
         async function userIdCheck(){
-            let data = await axios.get(`http://localhost:3000/user/userid_check?userid=${user_id.value}`);
+            let data = await axios.get(`http://localhost:3000/user/userIdCheck?user_id=${userId.value}`);
             // ajax를 가져와서 중복 여부 boolean으로 반환
-            let loginFlag = true;
-
+            let loginFlag = data.data.login;
+            console
             if(!loginFlag){
-                userIdMsg.innerHTML='중복된 아이디입니다.'
-                
+                userIdMsg.innerHTML='중복된 아이디입니다.' 
+                userIdMsg.style.color = 'red';
             }else{
                 userIdMsg.innerHTML='올바른 아이디입니다.'
                 userIdMsg.style.color = 'green';

@@ -19,6 +19,25 @@ let info = async (req,res,next) => {
     })
 }
 
+let userIdCheck = async (req, res)=>{
+    let user_id = req.query.user_id;
+    let flag = false;
+    let result = await User.findOne({
+        where:{ user_id }
+    })
+
+    if(result == undefined){
+        flag = true;
+    }else{
+        flag = false;
+    }
+
+    res.json({
+        login:flag,
+        user_id,
+    })
+}
+
 let join_success = async (req,res,next) =>{
     let user_id = req.body.user_id;
     let user_pw = req.body.user_pw;
@@ -70,4 +89,5 @@ module.exports = {
     join_success:join_success,
     login_check:login_check,
     logout,
+    userIdCheck
 }

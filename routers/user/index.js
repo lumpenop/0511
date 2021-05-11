@@ -26,6 +26,7 @@ router.get('/logout',controller.logout);
 router.get('/info',controller.info)
 router.post('/join_success',upload.single('img'),controller.join_success); // 이미지 처리
 router.post('/login_check',controller.login_check);
+router.get('/userIdCheck',controller.userIdCheck);
 
 
 module.exports = router;
